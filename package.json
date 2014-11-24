@@ -1,0 +1,30 @@
+{
+  "name": "home-manager-api",
+  "version": "1.0.0",
+  "description": "An APi for the Home-Manager",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bahuma/home-manager"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.0.1",
+    "express": "~4.0.0",
+    "mongoose": "~3.6.13",
+    "passport": "^0.2.1",
+    "passport-http": "^0.2.2"
+  },
+  "author": "Bahuma (http://bahuma-online.de)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bahuma/home-manager/issues"
+  },
+  "homepage": "https://github.com/bahuma/home-manager"
+}

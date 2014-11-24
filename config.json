@@ -1,0 +1,9 @@
+{
+    "database": {
+        "host": "ds055980.mongolab.com",
+        "port": "55980",
+        "name": "home-manager",
+        "user": "root",
+        "password": "root"
+    }       
+}
