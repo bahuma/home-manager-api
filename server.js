@@ -22,9 +22,6 @@ var shoppingListCtrl = require('./controllers/shoppingListCtrl.js');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Use the passport package in our application
-app.use(passport.initialize());
-
 
 // Enables CORS
 var enableCORS = function(req, res, next) {

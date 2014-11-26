@@ -31,7 +31,7 @@ exports.createListItem = function(req, res) {
 
 exports.deleteListItem = function(req, res) {
 		ShoppingListItem.remove({
-			_id: req.params.shop_id
+			_id: req.body.id
 		}, function(err, item) {
 			if (err) {
 				res.send(err);
