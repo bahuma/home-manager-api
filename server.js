@@ -14,6 +14,9 @@ var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000
 var dbString = 'mongodb://'+ config.database.user +':'+ config.database.password +'@'+ config.database.host +':'+ config.database.port +'/'+ config.database.name;
 mongoose.connect(dbString, options);
 
+
+var shoppingListCtrl = require('./controllers/shoppingListCtrl.js');
+
 // configure app to user bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,6 +58,11 @@ var test = function() {
 	return false;
 }
 
+
+router.route('/shoppinglist')
+    .get(shoppingListCtrl.getAllItems)
+    .post(shoppingListCtrl.createListItem)
+    .delete(shoppingListCtrl.deleteListItem);
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
