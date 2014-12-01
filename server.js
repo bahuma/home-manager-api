@@ -58,7 +58,9 @@ var test = function() {
 
 router.route('/shoppinglist')
     .get(shoppingListCtrl.getAllItems)
-    .post(shoppingListCtrl.createListItem)
+    .post(shoppingListCtrl.createListItem);
+
+router.route('/shoppinglist/:item_id')
     .delete(shoppingListCtrl.deleteListItem);
 
 // REGISTER OUR ROUTES -------------------------------
