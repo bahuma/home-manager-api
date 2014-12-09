@@ -1,5 +1,6 @@
 // Load required packages
 var ShoppingListItem = require('../models/shoppingListItem.js');
+var ShoppingListAutocompleteItem = require('../models/shoppingListAutocompleteItem.js');
 
 exports.getAllItems = function(req, res) {
 		
@@ -11,6 +12,19 @@ exports.getAllItems = function(req, res) {
 	    res.json(ShoppingListItems);
 	});
 }
+
+exports.searchItem = function(req, res) {
+	
+	console.log(req.params.name);
+
+    ShoppingListAutocompleteItem.find({name: new RegExp(req.params.name, "i")}, function(err, items) {
+        if (err) {
+            res.json(err);
+        }
+
+        res.json(items);
+    });
+}
 	
 exports.createListItem = function(req, res) {
     var item = new ShoppingListItem();
@@ -20,12 +34,30 @@ exports.createListItem = function(req, res) {
     item.save(function(err, item) {
         if (err) {
             res.send(err);
+        } else {
+        	
+        	ShoppingListAutocompleteItem.find({name: req.body.name}, function(err, items) {
+        	    if (err) {
+        	    	res.send(err);
+        	    }
+        	    
+        	    if (items.length === 0) {
+        	    	var autocompleteItem = new ShoppingListAutocompleteItem();
+        	    	autocompleteItem.name = req.body.name;
+        	    	
+        	    	autocompleteItem.save(function(err, item) {
+        	    		if (err) {
+        	    			res.send(err);
+        	    		}
+        	    	})
+        	    }
+        	})
+        	
+        	res.json({
+	            message: "Item created",
+	            createdObject: item
+	        })	
         }
-        
-        res.json({
-            message: "Item created",
-            createdObject: item
-        })
     })
 }
 

@@ -62,6 +62,9 @@ router.route('/shoppinglist')
 
 router.route('/shoppinglist/:item_id')
     .delete(shoppingListCtrl.deleteListItem);
+    
+router.route('/shoppinglist/search/:name')
+    .get(shoppingListCtrl.searchItem);
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
