@@ -16,6 +16,7 @@ mongoose.connect(dbString, options);
 
 
 var shoppingListCtrl = require('./controllers/shoppingListCtrl.js');
+var homeCtrl = require('./controllers/homeCtrl.js');
 
 // configure app to user bodyParser()
 // this will let us get the data from a POST
@@ -55,7 +56,7 @@ var test = function() {
 	return false;
 }
 
-
+// Shoppinglist
 router.route('/shoppinglist')
     .get(shoppingListCtrl.getAllItems)
     .post(shoppingListCtrl.createListItem);
@@ -66,7 +67,13 @@ router.route('/shoppinglist/:item_id')
 router.route('/shoppinglist/search/:name')
     .get(shoppingListCtrl.searchItem);
 
-// REGISTER OUR ROUTES -------------------------------
+// Home
+router.route('/home/images')
+    .get(homeCtrl.getImages)
+    .post(homeCtrl.addImage);
+    
+    
+    
 // all of our routes will be prefixed with /api
 app.use('/api', router);
 
