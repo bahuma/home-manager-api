@@ -1,6 +1,8 @@
 // Load required packages
 var ShoppingListItem = require('../models/shoppingListItem.js');
 var ShoppingListAutocompleteItem = require('../models/shoppingListAutocompleteItem.js');
+var nodemailer = require("nodemailer");
+var smtpTransport = require('nodemailer-smtp-transport');
 
 exports.getAllItems = function(req, res) {
 		
@@ -75,5 +77,51 @@ exports.deleteListItem = function(req, res) {
 			})
 		});
 	}
+
+exports.exportMail = function(req, res) {
+	
+	ShoppingListItem.find(function(err, ShoppingListItems) {
+	    var mailtext = "Here is your Shoppinglist.\nData from " + new Date().getDay() + '.' + new Date().getMonth() + '.' + new Date().getFullYear() + ' ' + new Date().getHours() + ':' + new Date().getMinutes() + '\n\n';
+	    
+	    ShoppingListItems.forEach(function(item, index, array) {
+	    	
+	    	mailtext = mailtext + "- " + item.name + '\n';
+	    });
+	    
+	    mailtext = mailtext + '\nGreetings\nYour Home-Manager';
+	    
+	    
+	    
+	    var transporter = nodemailer.createTransport({
+		    service: 'Gmail',
+		    auth: {
+		        user: process.env.mailuser,
+		        pass: process.env.mailpassword
+		    }
+		});
+		
+		transporter.sendMail({
+			from: "Home-Manager <" + process.env.mailuser + ">",
+			to: req.body.email,
+			subject: "ShoppingList Export",
+			text: mailtext
+		}, function(error, info) {
+			if (error) {
+				console.log(error);
+				res.json({
+					sent: false,
+					message: "Error while sending",
+					error: error
+				});
+			}
+			else {
+				res.json({
+					sent: true,
+					message: "Successfully sent"
+				})	
+			}
+		});
+	});
+}
 	
 module.exports = exports;

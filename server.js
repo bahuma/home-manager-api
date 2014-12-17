@@ -66,6 +66,9 @@ router.route('/shoppinglist/:item_id')
     
 router.route('/shoppinglist/search/:name')
     .get(shoppingListCtrl.searchItem);
+    
+router.route('/shoppinglist/mail')
+    .post(shoppingListCtrl.exportMail);
 
 // Home
 router.route('/home/images')
