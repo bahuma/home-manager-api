@@ -6,12 +6,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var config = require('./config.json');
 
 var mongoose = require('mongoose');
 var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, 
                 replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };
-var dbString = 'mongodb://'+ config.database.user +':'+ config.database.password +'@'+ config.database.host +':'+ config.database.port +'/'+ config.database.name;
+var dbString = 'mongodb://'+ process.env.database_user +':'+ process.env.database_password +'@'+ process.env.database_host +':'+ process.env.database_port +'/'+ process.env.database_name;
 mongoose.connect(dbString, options);
 
 
@@ -22,7 +21,6 @@ var homeCtrl = require('./controllers/homeCtrl.js');
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 
 // Enables CORS
 var enableCORS = function(req, res, next) {

@@ -95,13 +95,13 @@ exports.exportMail = function(req, res) {
 	    var transporter = nodemailer.createTransport({
 		    service: 'Gmail',
 		    auth: {
-		        user: process.env.mailuser,
-		        pass: process.env.mailpassword
+		        user: process.env.mail_user,
+		        pass: process.env.mail_password
 		    }
 		});
 		
 		transporter.sendMail({
-			from: "Home-Manager <" + process.env.mailuser + ">",
+			from: "Home-Manager <" + process.env.mail_user + ">",
 			to: req.body.email,
 			subject: "ShoppingList Export",
 			text: mailtext
