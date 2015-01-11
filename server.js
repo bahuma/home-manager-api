@@ -15,7 +15,8 @@ mongoose.connect(dbString, options);
 
 
 var shoppingListCtrl = require('./controllers/shoppingListCtrl.js');
-var homeCtrl = require('./controllers/homeCtrl.js');
+var commonCtrl = require('./controllers/commonCtrl.js');
+var userCtrl = require('./controllers/userCtrl.js');
 
 // configure app to user bodyParser()
 // this will let us get the data from a POST
@@ -68,10 +69,15 @@ router.route('/shoppinglist/search/:name')
 router.route('/shoppinglist/mail')
     .post(shoppingListCtrl.exportMail);
 
-// Home
-router.route('/home/images')
-    .get(homeCtrl.getImages)
-    .post(homeCtrl.addImage);
+// Common
+router.route('/common/:name')
+    .get(commonCtrl.getValue)
+    .post(commonCtrl.setValue);
+    
+// User
+router.route('/user')
+    .get(userCtrl.getUsers)
+    .post(userCtrl.createUser);
     
     
     
