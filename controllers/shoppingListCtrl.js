@@ -73,7 +73,8 @@ exports.deleteListItem = function(req, res) {
 			}
 			
 			res.json({
-			    message: "Item successfull deleted"
+			    message: "Item successfull deleted",
+			    deletedItem: item
 			})
 		});
 	}

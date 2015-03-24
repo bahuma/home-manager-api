@@ -15,7 +15,7 @@ exports.getValue = function (req, res) {
 exports.setValue = function (req, res) {
     var entity = new CommonEntity();
     
-    entity.name = req.params.name;
+    entity.name = req.paramsq.name;
     entity.value = req.body.value;
     
     entity.save(function(err, createdEntity) {
