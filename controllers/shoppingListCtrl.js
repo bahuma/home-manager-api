@@ -64,7 +64,15 @@ exports.createListItem = function(req, res) {
 }
 
 exports.deleteListItem = function(req, res) {
-	
+		var deletedItem;
+		
+		ShoppingListItem.find({_id: req.params.item_id}, function(err, items) {
+			if (err) {
+				res.send(err);
+			}		
+			
+			deletedItem = items[0];
+		});
 		ShoppingListItem.remove({
 			_id: req.params.item_id
 		}, function(err, item) {
@@ -74,7 +82,7 @@ exports.deleteListItem = function(req, res) {
 			
 			res.json({
 			    message: "Item successfull deleted",
-			    deletedItem: item
+			    deletedItem: deletedItem
 			})
 		});
 	}
