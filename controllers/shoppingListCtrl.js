@@ -16,8 +16,6 @@ exports.getAllItems = function(req, res) {
 }
 
 exports.searchItem = function(req, res) {
-	
-	console.log(req.params.name);
 
     ShoppingListAutocompleteItem.find({name: new RegExp(req.params.name, "i")}, function(err, items) {
         if (err) {

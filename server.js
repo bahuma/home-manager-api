@@ -5,14 +5,11 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var passport = require('passport');
 
+var dbString = "";
 var mongoose = require('mongoose');
 var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, 
                 replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };
-var dbString = 'mongodb://'+ process.env.database_user +':'+ process.env.database_password +'@'+ process.env.database_host +':'+ process.env.database_port +'/'+ process.env.database_name;
-mongoose.connect(dbString, options);
-
 
 var shoppingListCtrl = require('./controllers/shoppingListCtrl.js');
 var commonCtrl = require('./controllers/commonCtrl.js');
@@ -48,12 +45,26 @@ var router = express.Router();
 
 // middleware to use for all requests
 router.use(function(req, res, next) {
-	next(); // make sure we go to the next routes and don't stop here
+    var newDBString = "";
+    
+    if(req.query.dev == "true") 
+        newDBString = 'mongodb://'+ process.env.dev_database_user +':'+ process.env.dev_database_password +'@'+ process.env.dev_database_host +':'+ process.env.dev_database_port +'/'+ process.env.dev_database_name;
+    else
+        newDBString = 'mongodb://'+ process.env.live_database_user +':'+ process.env.live_database_password +'@'+ process.env.live_database_host +':'+ process.env.live_database_port +'/'+ process.env.live_database_name;
+    
+    if (dbString == "") {
+        dbString = newDBString;    
+        mongoose.connect(dbString, options);
+    }
+    
+    if (dbString != newDBString) {
+        dbString = newDBString;
+        mongoose.disconnect();
+        mongoose.connect(dbString, options);
+    }
+    
+    next(); // make sure we go to the next routes and don't stop here
 });
-
-var test = function() {
-	return false;
-}
 
 // Shoppinglist
 router.route('/shoppinglist')
